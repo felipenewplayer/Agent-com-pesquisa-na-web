@@ -6,6 +6,7 @@ api_key = os.getenv("GROQ_API_KEY")
 
 client = Groq(api_key=api_key)
 
+
 def busca_na_web(pergunta):
     resultados_texto = []
 
@@ -54,6 +55,17 @@ def agente(pergunta):
     return completion.choices[0].message.content
 
 
-resposta = agente("Quem é o presidente do Brasil em 2022")
+def perguntar():
+    while True:
+        pergunta = input("Você: ").strip()
 
+        if pergunta != "":
+            return pergunta
+
+        print("Digite uma pergunta válida.")
+
+
+resposta = agente(perguntar())
+
+print("\nIA:")
 print(resposta)
