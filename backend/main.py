@@ -1,19 +1,36 @@
 from groq import Groq
 from ddgs import DDGS
+from fastapi import FastAPI
+from pydantic import BaseModel
 import os
+
+app = FastAPI()
 
 api_key = os.getenv("GROQ_API_KEY")
 
 client = Groq(api_key=api_key)
 
 
+class Pergunta(BaseModel):
+    pergunta: str
+
+
+@app.get("/")
+def home():
+    return {"mensagem": "API funcionando"}
+
 def busca_na_web(pergunta):
     resultados_texto = []
 
     with DDGS() as ddgs:
-        resultados = ddgs.text(pergunta, max_results=5)
+
+        resultados = ddgs.text(
+            pergunta,
+            max_results=5
+        )
 
         for resultado in resultados:
+
             titulo = resultado.get("title", "")
             corpo = resultado.get("body", "")
 
@@ -25,21 +42,26 @@ def busca_na_web(pergunta):
 
 
 def agente(pergunta):
+
     info = busca_na_web(pergunta)
 
     prompt = f"""
-    Você é um agente inteligente.
+    Você é um agente inteligente especializado
+    em responder perguntas.
 
-    Pergunta:
+    Pergunta do usuário:
     {pergunta}
 
-    Informações encontradas:
+    Informações encontradas na web:
     {info}
 
-    Responda SOMENTE com base nessas informações.
+    Use as informações da web como apoio.
 
-    Se não houver resposta confiável, diga:
-    "Não foi possível responder com precisão."
+    Caso elas sejam insuficientes,
+    utilize também seu conhecimento
+    para responder da melhor forma possível.
+
+    Responda de forma clara e objetiva.
     """
 
     completion = client.chat.completions.create(
@@ -55,17 +77,11 @@ def agente(pergunta):
     return completion.choices[0].message.content
 
 
-def perguntar():
-    while True:
-        pergunta = input("Você: ").strip()
+@app.post("/perguntar")
+def perguntar(dados: Pergunta):
 
-        if pergunta != "":
-            return pergunta
+    resposta = agente(dados.pergunta)
 
-        print("Digite uma pergunta válida.")
-
-
-resposta = agente(perguntar())
-
-print("\nIA:")
-print(resposta)
+    return {
+        "resposta": resposta
+    }
