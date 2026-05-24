@@ -1,25 +1,63 @@
 import streamlit as st
 import requests
 
-st.title("Chat IA --- Usando LLMs do Groq")
+st.title("Chat IA com Groq")
 
-pergunta = st.text_input(
-    "Digite sua pergunta:"
+# cria histórico
+if "mensagens" not in st.session_state:
+    st.session_state.mensagens = []
+
+# mostra mensagens antigas
+for mensagem in st.session_state.mensagens:
+
+    with st.chat_message(mensagem["role"]):
+
+        st.markdown(mensagem["content"])
+
+# input estilo chat
+pergunta = st.chat_input(
+    "Digite sua pergunta"
 )
 
-if st.button("Perguntar"):
-   with st.spinner("Pesquisando e gerando resposta..."):
-    if pergunta.strip() == "":
-        st.warning("Digite uma pergunta válida.")
-    else:
-        try:
-            resposta = requests.post(
-                "http://localhost:8000/perguntar",
-                json={
-                    "pergunta": pergunta
-                }
-            )
-            dados = resposta.json()
-            st.write(dados["resposta"])
-        except Exception as erro:
-            st.error(f"Erro: {erro}")
+# quando usuário perguntar
+if pergunta:
+
+    # salva pergunta
+    st.session_state.mensagens.append(
+        {
+            "role": "user",
+            "content": pergunta
+        }
+    )
+
+    # mostra pergunta na tela
+    with st.chat_message("user"):
+
+        st.markdown(pergunta)
+
+    # loading
+    with st.spinner("Pensando..."):
+
+        resposta = requests.post(
+            "http://localhost:8000/perguntar",
+            json={
+                "pergunta": pergunta
+            }
+        )
+
+        dados = resposta.json()
+
+        resposta_ia = dados["resposta"]
+
+    # salva resposta
+    st.session_state.mensagens.append(
+        {
+            "role": "assistant",
+            "content": resposta_ia
+        }
+    )
+
+    # mostra resposta
+    with st.chat_message("assistant"):
+
+        st.markdown(resposta_ia)
