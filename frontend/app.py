@@ -39,7 +39,7 @@ if pergunta:
     with st.spinner("Pensando..."):
 
         resposta = requests.post(
-            "http://localhost:8000/perguntar",
+            "https://agent-com-pesquisa-na-web.onrender.com/perguntar",
             json={
                 "pergunta": pergunta
             }
