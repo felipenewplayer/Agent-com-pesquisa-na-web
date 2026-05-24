@@ -1,6 +1,11 @@
 import streamlit as st
 import requests
 
+st.set_page_config(
+    page_title="Chat IA do Felipe",
+    page_icon="🤖",
+    layout="centered"
+)
 st.title("Chat IA com Groq")
 
 # cria histórico
