@@ -1,201 +1,209 @@
-# 🤖 Chat IA com Groq + FastAPI + Streamlit
+# 🤖 Chat IA com Busca na Web
 
-Aplicação de Inteligência Artificial com:
+Aplicação web de IA desenvolvida com Python utilizando LLMs da Groq, integração com busca em tempo real via DuckDuckGo Search, frontend com Streamlit e backend com FastAPI.
 
-- Frontend usando Streamlit
-- Backend usando FastAPI
-- Busca web com DuckDuckGo
-- LLM hospedada na Groq
-- Arquitetura separada frontend/backend
+O projeto funciona como um mini assistente de IA capaz de:
+
+* responder perguntas
+* pesquisar informações na web
+* manter histórico visual de conversa
+* exibir respostas em interface estilo chatbot
 
 ---
 
-# 🚀 Tecnologias utilizadas
+# 🚀 Demonstração
 
 ## Frontend
-- Python
-- Streamlit
 
-## Backend
-- FastAPI
-- Uvicorn
+[https://chat-ia-frontend-msie.onrender.com](https://chat-ia-frontend-msie.onrender.com)
 
-## IA
-- Groq API
-- Modelo `openai/gpt-oss-120b`
+## Backend API
 
-## Busca Web
-- DuckDuckGo Search (DDGS)
+[https://agent-com-pesquisa-na-web.onrender.com/](https://agent-com-pesquisa-na-web.onrender.com/)
+
+## Swagger Docs
+
+[https://agent-com-pesquisa-na-web.onrender.com/docs](https://agent-com-pesquisa-na-web.onrender.com/docs)
 
 ---
 
-# 📂 Estrutura do Projeto
+# 🧠 Tecnologias utilizadas
+
+## Frontend
+
+* Python
+* Streamlit
+
+## Backend
+
+* FastAPI
+* Uvicorn
+
+## Inteligência Artificial
+
+* Groq API
+* openai/gpt-oss-120b
+
+## Busca Web
+
+* DuckDuckGo Search (DDGS)
+
+## Deploy
+
+* Render
+
+---
+
+# 📂 Estrutura do projeto
 
 ```bash
-projeto/
-│
-├── backend/
-│   ├── venv/
+├── backend
 │   ├── main.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── .env
 │
-├── frontend/
+├── frontend
 │   └── app.py
 │
-├── .env
 ├── .gitignore
 └── README.md
 ```
 
 ---
 
-# ⚙️ Instalação
+# ⚙️ Funcionalidades
 
-## 1. Clone o projeto
+* ✅ Chat em tempo real
+* ✅ Busca web integrada
+* ✅ Histórico de conversa
+* ✅ Interface estilo ChatGPT
+* ✅ Efeito de digitação
+* ✅ API REST
+* ✅ Deploy em cloud
+* ✅ Tratamento de erros
+
+---
+
+# 🖥️ Como rodar localmente
+
+## 1. Clone o repositório
 
 ```bash
-git clone URL_DO_PROJETO
+git clone https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git
 ```
 
 ---
 
-## 2. Entre na pasta
+## 2. Crie o ambiente virtual
 
 ```bash
-cd projeto
+python -m venv venv
 ```
 
 ---
 
-## 3. Crie o ambiente virtual
+## 3. Ative o ambiente virtual
 
 ### Windows
 
 ```bash
-python -m venv backend/venv
+venv\Scripts\activate
 ```
 
----
-
-## 4. Ative o ambiente virtual
-
-### PowerShell
+### Linux/macOS
 
 ```bash
-.\backend\venv\Scripts\activate
+source venv/bin/activate
 ```
 
 ---
 
-# 📦 Instale as dependências
+## 4. Instale as dependências
 
 ```bash
-pip install fastapi uvicorn streamlit requests groq ddgs python-dotenv
+pip install -r requirements.txt
 ```
 
 ---
 
-# 🔑 Configuração da API Key
+# 🔑 Variáveis de ambiente
 
-Crie um arquivo `.env`
+Crie um arquivo `.env`:
 
 ```env
-GROQ_API_KEY=SUA_CHAVE_AQUI
+GROQ_API_KEY=sua_chave_aqui
 ```
 
 ---
 
-# ▶️ Executando o projeto
-
-## Backend
+# ▶️ Executando o backend
 
 ```bash
-uvicorn backend.main:app --reload
+uvicorn main:app --reload
 ```
 
 API disponível em:
 
-```bash
-http://localhost:8000
+```txt
+http://127.0.0.1:8000
 ```
 
 ---
 
-## Frontend
-
-Em outro terminal:
+# ▶️ Executando o frontend
 
 ```bash
-streamlit run frontend/app.py
+streamlit run app.py
 ```
 
 Frontend disponível em:
 
-```bash
+```txt
 http://localhost:8501
 ```
 
 ---
 
-# 🧠 Como funciona
+# 📸 Interface
 
-Fluxo da aplicação:
+O projeto possui:
 
-```text
-Usuário
-   ↓
-Streamlit (Frontend)
-   ↓
-FastAPI (Backend)
-   ↓
-DuckDuckGo Search
-   ↓
-Groq LLM
-   ↓
-Resposta gerada
-   ↓
-Frontend
-```
+* chat interativo
+* efeito de digitação
+* histórico de mensagens
+* respostas geradas por IA
+* integração com pesquisa web
 
 ---
 
-# 💬 Interface estilo ChatGPT
+# 📚 Aprendizados
 
-A aplicação utiliza:
+Durante o desenvolvimento foram praticados conceitos de:
 
-- `st.chat_input()`
-- `st.chat_message()`
-- `st.session_state`
-
-Para criar:
-- histórico de conversa
-- memória temporária
-- interface moderna estilo chat
-
----
-
-# 🔍 Funcionalidades
-
-- Pesquisa web em tempo real
-- Integração com LLMs
-- Histórico de conversa
-- Interface moderna
-- Backend desacoplado
-- Estrutura escalável
+* APIs REST
+* Frontend com Streamlit
+* Backend com FastAPI
+* Integração com LLMs
+* Prompt Engineering
+* Deploy em cloud
+* Consumo de APIs
+* Manipulação de JSON
+* Tratamento de exceções
+* Arquitetura cliente-servidor
 
 ---
 
-# 📌 Melhorias futuras
+# 🔮 Melhorias futuras
 
-- [ ] Memória contextual
-- [ ] Streaming de respostas
-- [ ] Upload de PDF
-- [ ] Embeddings
-- [ ] Banco vetorial
-- [ ] Sistema RAG
-- [ ] Deploy no Render
-- [ ] Docker
-- [ ] Autenticação
+* [ ] Memória contextual real
+* [ ] Streaming real de tokens
+* [ ] Upload de PDFs
+* [ ] RAG com embeddings
+* [ ] Login de usuários
+* [ ] Banco de dados
+* [ ] Tema dark/light
+* [ ] Múltiplos chats
+* [ ] Docker
 
 ---
 

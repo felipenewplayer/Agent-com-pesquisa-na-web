@@ -53,23 +53,23 @@ def agente(pergunta):
     info = busca_na_web(pergunta)
 
     prompt = f"""
-    Você é um agente inteligente especializado
-    em responder perguntas.
+Você é um assistente de IA amigável.
 
-    Pergunta do usuário:
-    {pergunta}
+Responda de forma:
+- natural
+- curta quando possível
+- objetiva
+- sem criar tutoriais enormes sem necessidade
 
-    Informações encontradas na web:
-    {info}
+Se o usuário pedir código:
+explique de forma clara e prática.
 
-    Use as informações da web como apoio.
+Pergunta:
+{pergunta}
 
-    Caso elas sejam insuficientes,
-    utilize também seu conhecimento
-    para responder da melhor forma possível.
-
-    Responda de forma clara e objetiva.
-    """
+Informações:
+{info}
+"""
 
     completion = client.chat.completions.create(
         model="openai/gpt-oss-120b",

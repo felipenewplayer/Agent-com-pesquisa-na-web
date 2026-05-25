@@ -19,7 +19,7 @@ for mensagem in st.session_state.mensagens:
 
     with st.chat_message(mensagem["role"]):
 
-        st.markdown(mensagem["content"])
+       st.write(mensagem["content"])
 
 # input estilo chat
 pergunta = st.chat_input(
@@ -40,7 +40,7 @@ if pergunta:
     # mostra pergunta
     with st.chat_message("user"):
 
-        st.markdown(pergunta)
+        st.write(pergunta)
 
     # loading
     with st.spinner("Pensando..."):
@@ -48,7 +48,7 @@ if pergunta:
        try:
 
         resposta = requests.post(
-            "https://agent-com-pesquisa-na-web.onrender.com/perguntar",
+            "http://127.0.0.1:8000/perguntar",
             json={
                 "pergunta": pergunta
             },
