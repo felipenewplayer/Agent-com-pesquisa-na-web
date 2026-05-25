@@ -1,11 +1,13 @@
 import streamlit as st
 import requests
+import time
 
 st.set_page_config(
     page_title="Chat IA do Felipe",
     page_icon="🤖",
     layout="centered"
 )
+
 st.title("Chat IA com Groq")
 
 # cria histórico
@@ -35,7 +37,7 @@ if pergunta:
         }
     )
 
-    # mostra pergunta na tela
+    # mostra pergunta
     with st.chat_message("user"):
 
         st.markdown(pergunta)
@@ -62,7 +64,21 @@ if pergunta:
         }
     )
 
-    # mostra resposta
+    # mostra resposta com efeito digitando
     with st.chat_message("assistant"):
 
-        st.markdown(resposta_ia)
+        resposta_parcial = ""
+
+        placeholder = st.empty()
+
+        for palavra in resposta_ia.split():
+
+            resposta_parcial += palavra + " "
+
+            placeholder.markdown(
+                resposta_parcial + "▌"
+            )
+
+            time.sleep(0.03)
+
+        placeholder.markdown(resposta_parcial)
