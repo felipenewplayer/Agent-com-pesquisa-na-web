@@ -45,16 +45,25 @@ if pergunta:
     # loading
     with st.spinner("Pensando..."):
 
+       try:
+
         resposta = requests.post(
             "https://agent-com-pesquisa-na-web.onrender.com/perguntar",
             json={
                 "pergunta": pergunta
-            }
+            },
+            timeout=60
         )
+
+        resposta.raise_for_status()
 
         dados = resposta.json()
 
         resposta_ia = dados["resposta"]
+
+       except Exception as erro:
+
+        resposta_ia = f"Erro: {erro}"
 
     # salva resposta
     st.session_state.mensagens.append(
